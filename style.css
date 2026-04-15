@@ -9,15 +9,21 @@ Version: 1.0.1
 */
 
 
-/* Custom Footer Links Hover Effect */
+/* Custom Footer Links - Horizontal Menu & Hover */
+.custom-footer-links {
+    text-align: center; /* Ensures the whole menu stays perfectly centered */
+}
+
 .custom-footer-links a {
-    color: #1e1e1e !important; /* Your default link color */
-    text-decoration: none !important; /* Removes the default underline */
+    color: #00E5FF !important; /* Default light color (Cyan) */
+    text-decoration: none !important; 
     display: inline-block;
-    transition: all 0.3s ease-in-out; /* Makes the animation smooth */
+    margin: 10px 18px; /* The magic trick: Adds perfect even spacing between links */
+    transition: all 0.3s ease-in-out; 
+    font-weight: 600; /* Makes them slightly bold to look like a real menu */
 }
 
 .custom-footer-links a:hover {
-    color: #00E5FF !important; /* Changes to your bright cyan on hover */
-    transform: translateX(6px); /* Adds a sleek nudge to the right */
+    color: #1e1e1e !important; /* Changes to dark charcoal on hover */
+    transform: translateY(-3px); /* A sleek little "pop up" animation */
 }
