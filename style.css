@@ -44,6 +44,7 @@ Version: 1.0.1
 /* --- 2. THE FULL-WIDTH "SHELF" --- */
 .push-down-mobile .et_mobile_menu {
     position: relative !important;
+    top: 0 !important; /* <--- This line kills the massive JS gap! */
     width: 100vw !important;
     max-width: 100vw !important;
     left: 50% !important;
