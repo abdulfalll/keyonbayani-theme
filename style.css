@@ -102,10 +102,3 @@ Version: 1.0.1
 .push-down-mobile .mobile_nav.opened .mobile_menu_bar:before {
     color: #ffffff !important;
 }
-
-/* --- 5. TURN CART WHITE WHEN MENU IS OPEN --- */
-.push-down-mobile .et_pb_menu__wrap:has(.mobile_nav.opened) .et_pb_menu__cart-button,
-.push-down-mobile .et_pb_menu__wrap:has(.mobile_nav.opened) .et_pb_menu__cart-button i,
-.push-down-mobile .et_pb_menu__wrap:has(.mobile_nav.opened) .et_pb_menu__cart-button span {
-    color: #ffffff !important;
-}
