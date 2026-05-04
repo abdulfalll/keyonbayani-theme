@@ -119,6 +119,9 @@ Version: 1.0.1
     flex-direction: column !important;
     align-items: center !important;
     width: 100% !important;
+    height: auto !important; 
+    min-height: 0 !important;
+    padding-bottom: 0 !important;
 }
 
 /* --- Adjust spacing when stacked --- */
