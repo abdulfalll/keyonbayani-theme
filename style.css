@@ -106,20 +106,22 @@ Version: 1.0.1
 /* --- Stack Cart and Hamburger vertically when OPEN --- */
 .push-down-mobile .et_pb_menu__wrap:has(.mobile_nav.opened) {
     flex-direction: column !important;
-    align-items: center !important; /* Centers them above the dropdown */
+    align-items: center !important; 
     justify-content: center !important;
-    width: 100%; /* Ensures the flex container takes up the full width for centering */
+    width: 100% !important;
+}
+
+/* --- Override Divi's nested wrappers to center the hamburger --- */
+.push-down-mobile .et_pb_menu__wrap:has(.mobile_nav.opened) .et_mobile_nav_menu,
+.push-down-mobile .et_pb_menu__wrap:has(.mobile_nav.opened) .mobile_nav {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
 }
 
 /* --- Adjust spacing when stacked --- */
 .push-down-mobile .et_pb_menu__wrap:has(.mobile_nav.opened) .et_pb_menu__cart-button {
-    margin-right: 0 !important; /* Removes the horizontal gap we added earlier */
-    margin-bottom: 15px !important; /* Adds a gap between the cart and the pill button */
-}
-
-/* Ensure the hamburger pill wrapper centers nicely */
-.push-down-mobile .et_pb_menu__wrap:has(.mobile_nav.opened) .et_mobile_nav_menu {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+    margin-right: 0 !important; /* Removes the horizontal gap */
+    margin-bottom: 15px !important; /* Adds a gap below the cart */
 }
