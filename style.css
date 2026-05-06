@@ -28,3 +28,27 @@ Version: 1.0.1
     transform: translateY(-3px); /* A sleek little "pop up" animation */
 }
 
+/* ========================================== */
+/* FOOTER MOBILE LAYOUT (Max 980px only)      */
+/* ========================================== */
+@media only screen and (max-width: 980px) {
+    
+    /* Turn the row into a flexible grid */
+    .split-footer-row {
+        display: flex !important;
+        flex-wrap: wrap !important;
+    }
+
+    /* Column 1 (Email Form): Force to 100% full width */
+    .split-footer-row .et_pb_column:nth-child(1) {
+        width: 100% !important;
+        margin-bottom: 30px !important; /* Breathing room below the signature */
+    }
+
+    /* Columns 2 & 3 (Links): Split them 50/50 side-by-side */
+    .split-footer-row .et_pb_column:nth-child(2),
+    .split-footer-row .et_pb_column:nth-child(3) {
+        width: 50% !important;
+        margin-bottom: 0 !important; /* Removes Divi's default mobile column spacing */
+    }
+}
