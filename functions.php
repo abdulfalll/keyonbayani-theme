@@ -23,3 +23,15 @@ function divi_child_allow_svg_upload( $mimes ) {
 } 
 add_filter( 'upload_mimes', 'divi_child_allow_svg_upload' );
 // Add any custom WooCommerce logic below this line
+
+add_filter( 'woocommerce_product_single_add_to_cart_text', 'custom_digital_preorder_button', 10, 2 );
+add_filter( 'woocommerce_product_add_to_cart_text', 'custom_digital_preorder_button', 10, 2 );
+
+function custom_digital_preorder_button( $text, $product ) {
+    // Check if the product has the preorder tag
+    if ( has_term( 'preorder', 'product_tag', $product->get_id() ) ) {
+        return __( 'Pre Order Now', 'woocommerce' );
+    }
+    
+    return $text;
+}
