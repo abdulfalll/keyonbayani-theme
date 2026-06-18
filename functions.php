@@ -30,7 +30,7 @@ add_filter( 'woocommerce_product_add_to_cart_text', 'custom_digital_preorder_but
 function custom_digital_preorder_button( $text, $product ) {
     // Check if the product has the preorder tag
     if ( has_term( 'preorder', 'product_tag', $product->get_id() ) ) {
-        return __( 'Pre-Order Now', 'woocommerce' );
+        return __( 'I STILL TALK TO THEM TOO', 'woocommerce' );
     }
     
     return $text;
