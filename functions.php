@@ -35,3 +35,44 @@ function custom_digital_preorder_button( $text, $product ) {
     
     return $text;
 }
+
+// 1. Display the checkbox right above the Place Order button
+add_action( 'woocommerce_review_order_before_submit', 'add_custom_checkout_checkbox' );
+function add_custom_checkout_checkbox() {
+    woocommerce_form_field( 'preorder_agreement_checkbox', array(
+        'type'          => 'checkbox',
+        'class'         => array('form-row custom-checkbox'),
+        'label_class'   => array('woocommerce-form__label woocommerce-form__label-for-checkbox checkbox'),
+        'input_class'   => array('woocommerce-form__input woocommerce-form__input-checkbox input-checkbox'),
+        'required'      => true,
+        'label'         => 'I acknowledge that this is a pre-order and I will not receive the ebook immediately.',
+    ), WC()->checkout->get_value( 'preorder_agreement_checkbox' ) );
+}
+
+// 2. Validate the checkbox (Stop the transaction if left unchecked)
+add_action( 'woocommerce_checkout_process', 'validate_custom_checkout_checkbox' );
+function validate_custom_checkout_checkbox() {
+    if ( ! (int) isset( $_POST['preorder_agreement_checkbox'] ) ) {
+        // This is the error message the customer sees if they forget to check the box
+        wc_add_notice( __( 'Please acknowledge the pre-order terms to proceed with your purchase.', 'woocommerce' ), 'error' );
+    }
+}
+
+// 3. Save the agreement to the backend order details (For your records)
+add_action( 'woocommerce_checkout_update_order_meta', 'save_custom_checkout_checkbox' );
+function save_custom_checkout_checkbox( $order_id ) {
+    if ( ! empty( $_POST['preorder_agreement_checkbox'] ) ) {
+        update_post_meta( $order_id, '_preorder_agreement_checkbox', sanitize_text_field( $_POST['preorder_agreement_checkbox'] ) );
+    }
+}
+
+// 4. Display the customer's agreement on your admin order screen
+add_action( 'woocommerce_admin_order_data_after_billing_address', 'display_custom_checkbox_in_admin', 10, 1 );
+function display_custom_checkbox_in_admin( $order ) {
+    $acknowledged = get_post_meta( $order->get_id(), '_preorder_agreement_checkbox', true );
+    if ( $acknowledged ) {
+        echo '<p><strong>Pre-Order Terms:</strong> <span style="color: green; font-weight: bold;">Acknowledged</span></p>';
+    } else {
+        echo '<p><strong>Pre-Order Terms:</strong> <span style="color: red;">Not Acknowledged</span></p>';
+    }
+}
