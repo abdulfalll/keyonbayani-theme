@@ -52,3 +52,64 @@ Version: 1.0.1
         margin-bottom: 0 !important; /* Removes Divi's default mobile column spacing */
     }
 }
+
+/* Pre-Order Tooltip Icon Styling */
+.preorder-tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  color: #2D254C; /* Your dark purple brand color */
+  font-weight: bold;
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+/* The Hidden Tooltip Box */
+.preorder-tooltip .preorder-tooltiptext {
+  visibility: hidden;
+  width: 320px;
+  background-color: #ffffff;
+  color: #333333;
+  text-align: left;
+  border-radius: 8px;
+  padding: 20px;
+  position: absolute;
+  z-index: 999;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -160px; /* Centers the box */
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 12px;
+  line-height: 1.5em;
+  font-weight: normal;
+  box-shadow: 0px 10px 30px rgba(0,0,0,0.15); /* Adds a premium drop shadow */
+  border: 1px solid #EBE8E1;
+}
+
+/* Creates the little triangle arrow pointing down */
+.preorder-tooltip .preorder-tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -10px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: #ffffff transparent transparent transparent;
+}
+
+/* Show the tooltip text when you hover over the icon */
+.preorder-tooltip:hover .preorder-tooltiptext,
+.preorder-tooltip:active .preorder-tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Mobile Adjustment so it doesn't bleed off the screen */
+@media (max-width: 768px) {
+  .preorder-tooltip .preorder-tooltiptext {
+    width: 280px;
+    margin-left: -140px;
+  }
+}

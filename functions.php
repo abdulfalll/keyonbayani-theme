@@ -36,16 +36,20 @@ function custom_digital_preorder_button( $text, $product ) {
     return $text;
 }
 
-// 1. Display the checkbox right above the Place Order button
+// 1. Display the checkbox with a Tooltip
 add_action( 'woocommerce_review_order_before_submit', 'add_custom_checkout_checkbox' );
 function add_custom_checkout_checkbox() {
+    
+    // The short label + the tooltip HTML containing your bilingual text
+    $checkbox_label = 'I acknowledge the pre-order delivery terms. <span class="preorder-tooltip">ⓘ<span class="preorder-tooltiptext"><strong>Pre-Order Agreement:</strong><br>I understand that I am placing a pre-order for a product that will be delivered on or around October 12, 2026. I agree to be charged now and acknowledge that I may cancel my order and receive a full refund up until the moment the digital product is delivered to me. Once the download link has been provided, I will lose my right of withdrawal and will not be eligible for a refund.<br><br><strong>Accord de Précommande:</strong><br>Je comprends que je passe une précommande pour un produit qui sera livré le 12 octobre 2026 ou aux alentours de cette date. J\'accepte d\'être débité maintenant et je reconnais que je peux annuler ma commande et recevoir un remboursement intégral jusqu\'au moment où le produit numérique me sera livré. Une fois le lien de téléchargement fourni, je perdrai mon droit de rétractation et ne serai plus éligible à un remboursement.</span></span>';
+
     woocommerce_form_field( 'preorder_agreement_checkbox', array(
         'type'          => 'checkbox',
         'class'         => array('form-row custom-checkbox'),
         'label_class'   => array('woocommerce-form__label woocommerce-form__label-for-checkbox checkbox'),
         'input_class'   => array('woocommerce-form__input woocommerce-form__input-checkbox input-checkbox'),
         'required'      => true,
-        'label'         => 'I acknowledge that this is a pre-order and I will not receive the ebook immediately.',
+        'label'         => $checkbox_label,
     ), WC()->checkout->get_value( 'preorder_agreement_checkbox' ) );
 }
 
