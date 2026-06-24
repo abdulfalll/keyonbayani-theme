@@ -80,3 +80,13 @@ function display_custom_checkbox_in_admin( $order ) {
         echo '<p><strong>Pre-Order Terms:</strong> <span style="color: red;">Not Acknowledged</span></p>';
     }
 }
+add_action( 'wpo_wcpdf_after_billing_address', 'wpo_wcpdf_show_payment_method', 10, 2 );
+function wpo_wcpdf_show_payment_method( $document_type, $order ) {
+    if ( $document_type == 'invoice' ) {
+        ?>
+        <div class="payment-method">
+            <strong>Payment Method:</strong> <?php echo wp_kses_post( $order->get_payment_method_title() ); ?>
+        </div>
+        <?php
+    }
+}
