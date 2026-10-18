@@ -25,12 +25,12 @@ add_filter( 'upload_mimes', 'divi_child_allow_svg_upload' );
 
 // Custom WooCommerce Logic Below
 
-// 1. Change single product & archive button text to "Order Now"
+// 1. Change single product & archive button text to "Buy Now"
 add_filter( 'woocommerce_product_single_add_to_cart_text', 'custom_digital_order_button' );
 add_filter( 'woocommerce_product_add_to_cart_text', 'custom_digital_order_button' );
 
 function custom_digital_order_button() {
-    return __( 'Order Now', 'woocommerce' );
+    return __( 'Buy Now', 'woocommerce' );
 }
 
 // 2. Display Checkout Checkbox with updated Tooltip text
