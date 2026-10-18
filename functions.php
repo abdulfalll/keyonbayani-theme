@@ -25,20 +25,20 @@ add_filter( 'upload_mimes', 'divi_child_allow_svg_upload' );
 
 // Custom WooCommerce Logic Below
 
-// 1. Change single product & archive button text to "Buy Now"
+// 1. Change single product & archive button text to "Order Now"
 add_filter( 'woocommerce_product_single_add_to_cart_text', 'custom_digital_order_button' );
 add_filter( 'woocommerce_product_add_to_cart_text', 'custom_digital_order_button' );
 
 function custom_digital_order_button() {
-    return __( 'Buy Now', 'woocommerce' );
+    return __( 'Order Now', 'woocommerce' );
 }
 
 // 2. Display Checkout Checkbox with updated Tooltip text
 add_action( 'woocommerce_review_order_before_submit', 'add_custom_checkout_checkbox' );
 function add_custom_checkout_checkbox() {
     
-    // Updated label and bilingual agreement terms for standard digital fulfillment
-    $checkbox_label = 'I acknowledge the order terms. <span class="preorder-tooltip">ⓘ<span class="preorder-tooltiptext"><strong>Order Agreement:</strong><br>I understand that I am placing an order for a digital product. I agree to be charged now and acknowledge that once the download link has been provided, I will lose my right of withdrawal and will not be eligible for a refund.<br><br><strong>Accord de Commande:</strong><br>Je comprends que je passe une commande pour un produit numérique. J\'accepte d\'être débité maintenant et je reconnais qu\'une fois le lien de téléchargement fourni, je perdrai mon droit de rétractation et ne serai plus éligible à un remboursement.</span></span>';
+    // Updated label with 14-day right of withdrawal waiver agreement text
+    $checkbox_label = 'I acknowledge the order terms. <span class="preorder-tooltip">ⓘ<span class="preorder-tooltiptext"><strong>Digital Product Purchase Agreement:</strong><br>I understand that I am purchasing a digital product that will be delivered immediately. I acknowledge that I have a 14-day right of withdrawal (cooling-off period) under applicable consumer protection law, and I expressly agree to waive that right and request that the digital product be delivered to me before the 14-day period expires. I understand that once the download link has been provided and I have begun downloading the product, I will lose my right of withdrawal and will not be eligible for a refund.<br><br><strong>Accord d\'Achat de Produit Numérique :</strong><br>Je comprends que j\'achète un produit numérique qui sera livré immédiatement. Je reconnais que je dispose d\'un droit de rétractation de 14 jours conformément à la législation applicable en matière de protection des consommateurs, et j\'accepte expressément de renoncer à ce droit et demande que le produit numérique me soit livré avant l\'expiration de ce délai de 14 jours. Je comprends qu\'une fois le lien de téléchargement fourni et que j\'ai commencé à télécharger le produit, je perdrai mon droit de rétractation et ne serai plus éligible à un remboursement.</span></span>';
 
     woocommerce_form_field( 'order_agreement_checkbox', array(
         'type'          => 'checkbox',
