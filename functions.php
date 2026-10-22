@@ -31,7 +31,7 @@ add_filter( 'woocommerce_product_add_to_cart_text', 'custom_digital_order_button
 
 function custom_digital_order_button( $text, $product ) {
     if ( $product instanceof WC_Product && 135 === $product->get_id() ) {
-        return __( 'Get Your Copy\'s', 'woocommerce' );
+        return __( 'Buy Now', 'woocommerce' );
     }
 
     return __( 'Order Now', 'woocommerce' );
