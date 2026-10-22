@@ -25,11 +25,15 @@ add_filter( 'upload_mimes', 'divi_child_allow_svg_upload' );
 
 // Custom WooCommerce Logic Below
 
-// 1. Change single product & archive button text to "Order Now"
-add_filter( 'woocommerce_product_single_add_to_cart_text', 'custom_digital_order_button' );
-add_filter( 'woocommerce_product_add_to_cart_text', 'custom_digital_order_button' );
+// 1. Set button text for product 135 and use "Order Now" for other products
+add_filter( 'woocommerce_product_single_add_to_cart_text', 'custom_digital_order_button', 10, 2 );
+add_filter( 'woocommerce_product_add_to_cart_text', 'custom_digital_order_button', 10, 2 );
 
-function custom_digital_order_button() {
+function custom_digital_order_button( $text, $product ) {
+    if ( $product instanceof WC_Product && 135 === $product->get_id() ) {
+        return __( 'Get Your Copy\'s', 'woocommerce' );
+    }
+
     return __( 'Order Now', 'woocommerce' );
 }
 
