@@ -95,19 +95,20 @@ function wpo_wcpdf_show_payment_method( $document_type, $order ) {
 
 /**
  * 1. Control which pages display the Bottom Scrapbook Dock.
- *    Currently set to show ONLY on the Homepage and the pages assigned to Template #3.
+ *    Excludes /sybg/ so the book page keeps its original top navigation header.
  */
 function kb_should_show_bottom_dock() {
-	// Add the exact page slugs from your "Links + 4 More" Divi template here
 	$allowed_pages = array(
-		'links',
-		'about',
-		'events',
-		'press',
+		'about-me',
+		'signs-from-the-other-side',
 		'contact',
+		'links',
 	);
 
-	return is_front_page() || is_page( $allowed_pages );
+	// Includes Homepage, the allowed pages above, and the WooCommerce Shop page
+	return is_front_page()
+		|| is_page( $allowed_pages )
+		|| ( function_exists( 'is_shop' ) && is_shop() );
 }
 
 /**
@@ -136,7 +137,7 @@ function kb_enqueue_bottom_dock_assets() {
 		get_stylesheet_directory_uri() . $js_rel_path,
 		array(),
 		file_exists( $js_full_path ) ? filemtime( $js_full_path ) : '1.0.0',
-		true // Load in footer
+		true
 	);
 }
 add_action( 'wp_enqueue_scripts', 'kb_enqueue_bottom_dock_assets' );
@@ -148,6 +149,10 @@ function kb_render_bottom_dock() {
 	if ( ! kb_should_show_bottom_dock() ) {
 		return;
 	}
+
+	$shop_url = function_exists( 'wc_get_page_permalink' )
+		? wc_get_page_permalink( 'shop' )
+		: home_url( '/shop/' );
 	?>
 	<div id="kb-bottom-dock" class="kb-dock-wrapper">
 		<nav id="kb-dock-panel" class="kb-dock-panel" aria-hidden="true">
@@ -156,10 +161,11 @@ function kb_render_bottom_dock() {
 
 			<ul class="kb-dock-links">
 				<li><a href="<?php echo esc_url( home_url( '/' ) ); ?>" data-accent="yellow">Home</a></li>
-				<li><a href="<?php echo esc_url( home_url( '/since-youve-been-gone' ) ); ?>" data-accent="pink">The Book</a></li>
-				<li><a href="<?php echo esc_url( home_url( '/about' ) ); ?>" data-accent="mint">About Keyon</a></li>
-				<li><a href="<?php echo esc_url( home_url( '/events' ) ); ?>" data-accent="lavender">Events &amp; Press</a></li>
-				<li><a href="<?php echo esc_url( home_url( '/contact' ) ); ?>" data-accent="pink">Contact</a></li>
+				<li><a href="<?php echo esc_url( home_url( '/sybg/' ) ); ?>" data-accent="pink">SYBG</a></li>
+				<li><a href="<?php echo esc_url( $shop_url ); ?>" data-accent="mint">Shop</a></li>
+				<li><a href="<?php echo esc_url( home_url( '/about-me/' ) ); ?>" data-accent="lavender">About</a></li>
+				<li><a href="<?php echo esc_url( home_url( '/signs-from-the-other-side/' ) ); ?>" data-accent="yellow">Signs</a></li>
+				<li><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" data-accent="pink">Contact</a></li>
 			</ul>
 		</nav>
 
