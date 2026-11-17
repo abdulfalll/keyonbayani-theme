@@ -105,7 +105,6 @@ function kb_should_show_bottom_dock() {
 		'links',
 	);
 
-	// Includes Homepage, the allowed pages above, and the WooCommerce Shop page
 	return is_front_page()
 		|| is_page( $allowed_pages )
 		|| ( function_exists( 'is_shop' ) && is_shop() );
