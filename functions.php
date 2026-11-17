@@ -92,3 +92,136 @@ function wpo_wcpdf_show_payment_method( $document_type, $order ) {
         <?php
     }
 }
+
+/**
+ * 1. Control which pages display the Bottom Scrapbook Dock.
+ *    Currently set to show ONLY on the Homepage and the pages assigned to Template #3.
+ */
+function kb_should_show_bottom_dock() {
+	// Add the exact page slugs from your "Links + 4 More" Divi template here
+	$allowed_pages = array(
+		'links',
+		'about',
+		'events',
+		'press',
+		'contact',
+	);
+
+	return is_front_page() || is_page( $allowed_pages );
+}
+
+/**
+ * 2. Enqueue the Bottom Dock CSS and JS only on allowed pages.
+ */
+function kb_enqueue_bottom_dock_assets() {
+	if ( ! kb_should_show_bottom_dock() ) {
+		return;
+	}
+
+	$css_rel_path = '/assets/css/bottom-dock.css';
+	$js_rel_path  = '/assets/js/bottom-dock.js';
+
+	$css_full_path = get_stylesheet_directory() . $css_rel_path;
+	$js_full_path  = get_stylesheet_directory() . $js_rel_path;
+
+	wp_enqueue_style(
+		'kb-bottom-dock-style',
+		get_stylesheet_directory_uri() . $css_rel_path,
+		array(),
+		file_exists( $css_full_path ) ? filemtime( $css_full_path ) : '1.0.0'
+	);
+
+	wp_enqueue_script(
+		'kb-bottom-dock-script',
+		get_stylesheet_directory_uri() . $js_rel_path,
+		array(),
+		file_exists( $js_full_path ) ? filemtime( $js_full_path ) : '1.0.0',
+		true // Load in footer
+	);
+}
+add_action( 'wp_enqueue_scripts', 'kb_enqueue_bottom_dock_assets' );
+
+/**
+ * 3. Render the Bottom Dock HTML in wp_footer on allowed pages.
+ */
+function kb_render_bottom_dock() {
+	if ( ! kb_should_show_bottom_dock() ) {
+		return;
+	}
+	?>
+	<div id="kb-bottom-dock" class="kb-dock-wrapper">
+		<nav id="kb-dock-panel" class="kb-dock-panel" aria-hidden="true">
+			<span class="kb-tape kb-tape--left" aria-hidden="true"></span>
+			<span class="kb-tape kb-tape--right" aria-hidden="true"></span>
+
+			<ul class="kb-dock-links">
+				<li><a href="<?php echo esc_url( home_url( '/' ) ); ?>" data-accent="yellow">Home</a></li>
+				<li><a href="<?php echo esc_url( home_url( '/since-youve-been-gone' ) ); ?>" data-accent="pink">The Book</a></li>
+				<li><a href="<?php echo esc_url( home_url( '/about' ) ); ?>" data-accent="mint">About Keyon</a></li>
+				<li><a href="<?php echo esc_url( home_url( '/events' ) ); ?>" data-accent="lavender">Events &amp; Press</a></li>
+				<li><a href="<?php echo esc_url( home_url( '/contact' ) ); ?>" data-accent="pink">Contact</a></li>
+			</ul>
+		</nav>
+
+		<div class="kb-dock-bar">
+			<!-- Left Marigold Home Stamp -->
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="kb-dock-stamp" aria-label="Home">
+				<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1E1B18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M12 2L14.2 9.2L21.5 11.5L14.2 13.8L12 21L9.8 13.8L2.5 11.5L9.8 9.2L12 2Z" fill="#FFFDF8"/>
+				</svg>
+			</a>
+
+			<!-- Center Menu Toggle Button -->
+			<button
+				id="kb-dock-toggle"
+				class="kb-dock-toggle"
+				type="button"
+				aria-expanded="false"
+				aria-controls="kb-dock-panel"
+			>
+				<span class="kb-toggle-label">MENU</span>
+				<span class="kb-toggle-icon" aria-hidden="true">✦</span>
+			</button>
+
+			<!-- Right Mint Shopping Bag Stamp (WooCommerce) -->
+			<?php if ( class_exists( 'WooCommerce' ) ) :
+				$cart_count = WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
+			?>
+				<a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="kb-dock-cart" aria-label="View Shopping Cart">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E1B18" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M6 7h12l1 13H5L6 7z" fill="#FFFDF8"/>
+						<path d="M9 7V5a3 3 0 0 1 6 0v2"/>
+					</svg>
+					<span class="kb-cart-count<?php echo ( 0 === $cart_count ) ? ' is-empty' : ''; ?>">
+						<?php echo esc_html( $cart_count ); ?>
+					</span>
+				</a>
+			<?php endif; ?>
+		</div>
+	</div>
+	<?php
+}
+add_action( 'wp_footer', 'kb_render_bottom_dock' );
+
+/**
+ * 4. Keep the Bottom Dock cart badge synced via WooCommerce AJAX fragments.
+ */
+function kb_dock_cart_count_fragment( $fragments ) {
+	if ( ! class_exists( 'WooCommerce' ) || ! WC()->cart ) {
+		return $fragments;
+	}
+
+	$cart_count  = WC()->cart->get_cart_contents_count();
+	$empty_class = ( 0 === $cart_count ) ? ' is-empty' : '';
+
+	ob_start();
+	?>
+	<span class="kb-cart-count<?php echo esc_attr( $empty_class ); ?>">
+		<?php echo esc_html( $cart_count ); ?>
+	</span>
+	<?php
+	$fragments['span.kb-cart-count'] = ob_get_clean();
+
+	return $fragments;
+}
+add_filter( 'woocommerce_add_to_cart_fragments', 'kb_dock_cart_count_fragment' );

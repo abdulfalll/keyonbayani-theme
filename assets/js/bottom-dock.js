@@ -1,0 +1,221 @@
+:root {
+  --kb-paper: #F8F2E6;
+  --kb-paper-lines: rgba(30, 27, 24, 0.06);
+  --kb-ink: #1E1B18;
+  --kb-yellow: #F3C64F;
+  --kb-pink: #F4A6BE;
+  --kb-mint: #68C9BE;
+  --kb-lavender: #B8A8DF;
+}
+
+.kb-dock-wrapper {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Scrapbook Index-Card Popover */
+.kb-dock-panel {
+  position: relative;
+  width: 256px;
+  margin-bottom: 14px;
+  padding: 28px 22px 24px;
+  background-color: var(--kb-paper);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 27px,
+    var(--kb-paper-lines) 28px
+  );
+  border: 2px solid var(--kb-ink);
+  border-radius: 4px;
+  box-shadow: 4px 4px 0px var(--kb-ink);
+  text-align: center;
+
+  /* Closed state */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px) rotate(-1.5deg) scale(0.97);
+  transition: opacity 0.22s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.22s;
+}
+
+.kb-dock-panel.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) rotate(0deg) scale(1);
+}
+
+/* Translucent Washi Tape Strips on Card Corners */
+.kb-tape {
+  position: absolute;
+  top: -10px;
+  width: 54px;
+  height: 18px;
+  pointer-events: none;
+  opacity: 0.85;
+  border-left: 1px dashed rgba(30, 27, 24, 0.2);
+  border-right: 1px dashed rgba(30, 27, 24, 0.2);
+}
+
+.kb-tape--left {
+  left: 14px;
+  background: var(--kb-pink);
+  transform: rotate(-14deg);
+}
+
+.kb-tape--right {
+  right: 14px;
+  background: var(--kb-mint);
+  transform: rotate(12deg);
+}
+
+/* Navigation Links */
+.kb-dock-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.kb-dock-links li {
+  margin: 0;
+  padding: 0;
+}
+
+.kb-dock-links a {
+  position: relative;
+  display: inline-block;
+  padding: 4px 12px;
+  color: var(--kb-ink);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  z-index: 1;
+  transition: transform 0.16s ease;
+}
+
+/* Pastel Highlighter Sweep Behind Links */
+.kb-dock-links a::before {
+  content: "";
+  position: absolute;
+  inset: 2px 0;
+  background: var(--kb-yellow);
+  border-radius: 3px;
+  z-index: -1;
+  transform: scaleX(0) rotate(-1.5deg);
+  transform-origin: left center;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.kb-dock-links a[data-accent="pink"]::before {
+  background: var(--kb-pink);
+}
+
+.kb-dock-links a[data-accent="mint"]::before {
+  background: var(--kb-mint);
+}
+
+.kb-dock-links a[data-accent="lavender"]::before {
+  background: var(--kb-lavender);
+}
+
+.kb-dock-links a:hover,
+.kb-dock-links a:focus-visible {
+  transform: translateY(-1px) rotate(-1deg);
+}
+
+.kb-dock-links a:hover::before,
+.kb-dock-links a:focus-visible::before {
+  transform: scaleX(1) rotate(-1.5deg);
+}
+
+/* Bottom Control Row */
+.kb-dock-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Left Marigold Home Stamp */
+.kb-dock-stamp {
+  width: 48px;
+  height: 48px;
+  background: var(--kb-yellow);
+  border: 2px solid var(--kb-ink);
+  border-radius: 6px;
+  box-shadow: 3px 3px 0px var(--kb-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transform: rotate(-2.5deg);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.kb-dock-stamp:hover {
+  transform: rotate(0deg) translate(-1px, -1px);
+  box-shadow: 4px 4px 0px var(--kb-ink);
+  background: #F6CF65;
+}
+
+.kb-dock-stamp:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px var(--kb-ink);
+}
+
+/* Right Menu Toggle Button */
+.kb-dock-toggle {
+  height: 48px;
+  padding: 0 24px;
+  background: var(--kb-paper);
+  color: var(--kb-ink);
+  border: 2px solid var(--kb-ink);
+  border-radius: 6px;
+  box-shadow: 3px 3px 0px var(--kb-ink);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transform: rotate(1deg);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.kb-dock-toggle:hover {
+  transform: rotate(0deg) translate(-1px, -1px);
+  box-shadow: 4px 4px 0px var(--kb-ink);
+  background: #FFFDF8;
+}
+
+.kb-dock-toggle:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px var(--kb-ink);
+}
+
+.kb-toggle-icon {
+  font-size: 13px;
+  transition: transform 0.22s ease;
+}
+
+.kb-dock-toggle[aria-expanded="true"] {
+  background: var(--kb-pink);
+  transform: rotate(0deg);
+}
+
+.kb-dock-toggle[aria-expanded="true"] .kb-toggle-icon {
+  transform: rotate(90deg);
+}
