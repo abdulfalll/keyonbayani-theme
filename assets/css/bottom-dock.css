@@ -286,6 +286,17 @@
   font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
+/* Hide the old Divi Menu Module inside the Global Footer on pages using the Bottom Dock */
+.et-l--footer .et_pb_menu,
+.et-l--footer .et_pb_fullwidth_menu {
+  display: none !important;
+}
+
+/* Add bottom space so the floating dock doesn't cover Terms & Conditions / Copyright */
+.et-l--footer {
+  padding-bottom: 90px;
+}
+
 @media (max-width: 480px) {
   .kb-dock-toggle {
     padding: 0 18px;
