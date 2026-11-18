@@ -160,7 +160,7 @@ function kb_render_bottom_dock() {
 
 			<ul class="kb-dock-links">
 				<li><a href="<?php echo esc_url( home_url( '/' ) ); ?>" data-accent="yellow">Home</a></li>
-				<li><a href="<?php echo esc_url( home_url( '/sybg/' ) ); ?>" data-accent="pink">My Book</a></li>
+				<li><a href="<?php echo esc_url( home_url( '/my-book/' ) ); ?>" data-accent="pink">My Book</a></li>
 				<li><a href="<?php echo esc_url( $shop_url ); ?>" data-accent="mint">Shop</a></li>
 				<li><a href="<?php echo esc_url( home_url( '/about-me/' ) ); ?>" data-accent="lavender">About</a></li>
 				<li><a href="<?php echo esc_url( home_url( '/signs-from-the-other-side/' ) ); ?>" data-accent="yellow">Signs</a></li>
