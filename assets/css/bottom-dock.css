@@ -303,3 +303,25 @@
     font-size: 13px;
   }
 }
+
+/* Mobile size bump (phones only; swap to 980px to include tablets) */
+@media (max-width: 767px) {
+    /* Replace .kb-floating-dock with your exact dock wrapper class from bottom-dock.css */
+    .kb-floating-dock {
+        bottom: 18px;
+        padding: 10px 14px;
+        gap: 6px;
+        max-width: calc(100vw - 20px);
+    }
+
+    /* Replace with your exact link/item class from bottom-dock.css */
+    .kb-floating-dock a {
+        font-size: 14px;
+        padding: 10px 13px;
+    }
+
+    .kb-floating-dock svg {
+        width: 20px;
+        height: 20px;
+    }
+}
